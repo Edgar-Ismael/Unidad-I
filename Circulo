@@ -1,0 +1,134 @@
+package AnimarObjeto;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.Random;
+
+
+public class Circulo {
+    
+    //CORDENADAS
+    private int coordenada_x, coordenada_y;
+    
+    //tamaño
+    private int radio;
+    
+    //instancia
+    private Color color;
+    
+    //Sentido en que se mueve
+    private int sentido;
+    
+   //Ssentido en el que se mueve 
+    private final int ARRIBA =1;
+    private  final int DERECHA_ARRIBA =2;
+    private final int DERECHA_ABAJO =3;
+    private final int DERECHA =4;
+    private final int ABAJO =5;
+    private final int IZQUIERDA_ABAJO =6;
+    private final int IZQUIERDA =7;
+    private final int IZQUIERDA_ARRIBA =8;
+    
+    
+    //valores
+    private int valores;
+    
+    //magenes de la ventana
+    private int minimo_x,minimo_y,maximo_x,maximo_y;
+    
+    //objeto random
+    
+    private Random random;
+    private final int velocidad;
+    
+    public Circulo(int alto, int ancho,int radio,int velocidad){
+       //definir objeto
+        random = new Random();
+       color = new Color(
+       random.nextInt(255),
+       random.nextInt(255),
+       random.nextInt(255));
+       
+       //coordenadas iniciales 
+       this.coordenada_x = this.random.nextInt(ancho - radio );
+       this.coordenada_y = this.random.nextInt(alto - radio );
+       
+       //definir radio
+       this.radio = radio;
+       
+       //definir sentido
+       this.radio = 1 * random.nextInt(9);
+       
+       //definir velocidad
+       this.velocidad = velocidad;
+       
+       //definir coordenadas minimas
+       this.minimo_x = 0;
+       this.minimo_y = 0;
+       
+       //definir coordenadas maximas 
+       this.maximo_x = ancho;
+       this.maximo_y = alto;
+       
+       
+       
+       
+    }
+    public void dibujar(Graphics graphics){
+        graphics.setColor(this.color);
+        graphics.setColor(Color.red);
+        graphics.fillOval(
+        this.coordenada_x,
+        this.coordenada_y,
+        this.radio,
+        this.radio);
+        
+    }
+    
+    public void animar(){
+        //siguiente coordenada positiva
+        int x_positiva = this.coordenada_x + this.velocidad;
+        int y_positiva = this.coordenada_y + this.velocidad;
+        
+        //siguiente coordenada positiva
+        int x_negativa = this.coordenada_x - this.velocidad;
+        int y_negativa = this.coordenada_y - this.velocidad;
+        
+        //logica para determinar coliciones y sentido
+        switch(this.sentido){
+            case ARRIBA:
+                if (y_negativa > this.minimo_y){
+                    this.coordenada_y = y_negativa;
+                       } else {
+                this.sentido = 1 + random.nextInt(8);
+                         }            
+                break;
+                
+            case DERECHA_ARRIBA:
+                if((x_positiva < this.maximo_x) && (y_negativa > this.minimo_y)){
+                    this.coordenada_x = x_positiva;
+                    this.coordenada_y = y_positiva;
+                    } else {
+                this.sentido = 1 + random.nextInt(8);
+                         }
+              break;
+                
+        
+        case DERECHA_ABAJO:
+        if((x_positiva < this.maximo_x) && (y_negativa > this.minimo_y)){
+                    this.coordenada_x = x_positiva;
+                    this.coordenada_y = y_positiva;
+                    } else {
+                this.sentido = 1 + random.nextInt(8);
+                         }
+              break;
+                } 
+        
+                
+   }            
+                
+        }
+   
+    }
+   
+}
